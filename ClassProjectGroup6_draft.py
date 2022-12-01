@@ -11,7 +11,8 @@
 #-ROUGH DRAFT------------------------------------------------------------------
 
 import csv
-# import pandas as pd
+import pandas as pd
+from decimal import Decimal # helps avoid floating point errors
 
 read_info = { }
 month_delay_list = []
@@ -26,15 +27,17 @@ method = input("Use pandas ? (yes/no) ")
 def loadFile(fname):
     count = 0
     with open(fname, 'r') as file:
-        reader = csv.reader(file, delimiter = ',')
+        reader = csv.reader(file, delimiter = ',', skipinitialspace=True)
         cols = len(next(reader))
         for row in reader:
-            print(row)
-            count+=1
-    print ("Total columns:")
-    print (cols)
-    print ("Total rows:")
-    print (count)
+            yield row # yields a row each time the function is called as an iterator (in a for loop)
+            #print(row)
+            #count+=1
+    #print ("Total columns:")
+    #print (cols)
+    #print ("Total rows:")
+    #print (count)
+    
 
 """
 class nameSwitch:
@@ -49,18 +52,29 @@ class nameSwitch:
         return "DEP_DEL15"
 mySwitch = nameSwitch()
 """
-
+'''
+#fname = '/home/fac/walter/public_html/courses/cs3500/2022_fall/proj/data/2019_Airline_Delays_Dataset_train_Part2.csv' 
+fname = input("Enter the file name: ")
+def readByPandas(fname):
+    try:
+        df = pd.read_csv(fname)
+    except FileNotFoundError:
+        print("File was not found")
+    return df
+'''
+'''
 #read with pandas
 def readByPandas(fname):
     #df = pd.read_csv(fname)
     # dummy code 
     # TODO: remove following line when fully optimized
     df = "hello\n"
-    print(df)
+    return df
 
     #colNum = input("Which column do you want to show? ")
     #print(mySwitch.colName(colNum))
     #print (df[['MONTH', 'DAY_OF_WEEK']])
+'''
 """
 if method == 'yes':
     readByPandas(fname)
@@ -319,3 +333,58 @@ def top_5_airports(alist):
         new_dict.update(dict_buf)
         del alist[most_delayed_airport]
     return new_dict
+
+#Alonso #4
+def top_5_airport_passengers(fname): #fname is file name string
+    #Print the 5 airport that averaged the greatest number of passengers in 2019.
+    # this function is confirmed to work
+    five = [0, 0, 0, 0, 0]
+    airports = {} # {airport_name:month_avg} dictionary
+    months = [0] * 13 #index represent month number, value represents average passengers
+    for row in loadFile(fname): #get necessary column values
+        airport_name = row[17]
+        month = int(row[0])
+        month_avg = int(row[12])
+        if airport_name in airports:
+            months = airports[airport_name] 
+        else:
+            months = [0] * 13
+        months[month] = month_avg
+        airports[airport_name] = months #each airport holds each month and its avg
+
+
+    airport_tot = {}
+    for airport_name in list(airports.keys()):
+        tot_pass = 0 #initialize total num of passengers for each airport
+        print(months)
+        print(airport_name)
+        months = airports[airport_name]
+        for avg in months:
+            tot_pass += avg #sum up passengers for each of the 12 months
+        airport_tot[airport_name] = tot_pass
+    airtotval = list(airport_tot.values())
+    five = []
+
+    for i in range(0, 5):
+        max1 = 0
+		
+        for j in range(len(airtotval)):	
+            if (airtotval[j] > max1):
+                max1 = airtotval[j]
+				
+        airtotval.remove(max1)
+        five.append(max1)
+    return five #list of 5 elements
+
+# Alonso #5
+def top_5_airline_employees(read_info):
+    # This function needs 
+    # GROUND_SERV_PER_PASS, FLT_ATTENDANTS_PER_PASS, passed as 2d array of strings
+    # 
+    # get the month and day, the airline carrier, number of seats
+    #       sum all seats where (airline carrier, month, and day match) to get passenger number
+    #       multiply passenger number with ground_serv_per_pass to get number of ground employees
+    #       multiply passenger number with flt_attendants_per_pass to get number of flight attendants
+    #           sum ground employees and flight attendants to get number of all employees
+    # Print the 5 airlines that averaged the greatest number of employees in 2019
+    pass
