@@ -4,9 +4,9 @@
 #---------------------------
 
 # Load file
-from ExploringFile import readByPandas, distinctValue, dropColumn, searchColumn, addColumn
+from ExploringFile import readByPandas, distinctValue, dropColumn, searchColumn, describe_data
 from openFile import loadFile
-
+from ClassProjectGroup6_draft import analyze, solve_reqs
         
 print("Please type the name of the file to load:")
 filename = input("")
@@ -29,6 +29,8 @@ def main_menu():
     elif ans1 == "2":
         expData()
     elif ans1 == "3":
+        df = readByPandas(filename)
+        solve_reqs(filename)
         #code
         exit()
     elif ans1 == "4":

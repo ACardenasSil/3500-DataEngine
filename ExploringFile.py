@@ -96,7 +96,17 @@ def searchColumn(fname):
             print("Column was not found")
     except KeyError:
         print("Column does not exist")
-
+    
+def get_column(fname, col_name):
+    df = pd.read_csv(fname)
+    column = df[col_name]
+    return column
+    
+def describe_data(fname):
+    user_col = input("Name column to describe: ")
+    print(user_col)
+    out_col = get_column(fname, user_col)
+    return out_col
 
 def readByPandas(fname):
     #List all columns

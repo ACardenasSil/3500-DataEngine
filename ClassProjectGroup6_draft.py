@@ -214,14 +214,22 @@ def mean(data_list):
     mean_num = len(data_list)
     for i in data_list:
         mean_sum += i
-    return mean_sum / mean_num
+    try:
+        answer = mean_sum / mean_num
+    except ZeroDivisionError:
+        print("Error 103: Division by zero error")
+    return answer
  
 # finds the variance of a list of values
 def variance(data_list, mean):
     var_sum = 0
     for i in data_list:
         var_sum += (i - mean) ** 2
-    return var_sum / (len(data_list) - 1)
+    try:
+        answer = var_sum / (len(data_list) - 1)
+    except ZeroDivisionError:
+        print("Error 103: Division by zero error")
+    return answer
 
 # finds the variance of a list of values by taking in the variance
 # returned by the above function
@@ -251,118 +259,325 @@ def per_80(data_list):
 #-------------------
 
 #6
-def find_month_delays(read_info, month_delays):
-    if read_info[0] == "1":
-        num = int(read_info[2])
-        month_delays[0] += num
-    elif read_info[0] == "2":
-        num = int(read_info[2])
-        month_delays[1] += num
-    elif read_info[0] == "3":
-        num = int(read_info[2])
-        month_delays[2] += num
-    elif read_info[0] == "4":
-        num = int(read_info[2])
-        month_delays[3] += num
-    elif read_info[0] == "5":
-        num = int(read_info[2])
-        month_delays[4] += num
-    elif read_info[0] == "6":
-        num = int(read_info[2])
-        month_delays[5] += num
-    elif read_info[0] == "7":
-        num = int(read_info[2])
-        month_delays[6] += num
-    elif read_info[0] == "8":
-        num = int(read_info[2])
-        month_delays[7] += num
-    elif read_info[0] == "9":
-        num = int(read_info[2])
-        month_delays[8] += num
-    elif read_info[0] == "10":
-        num = int(read_info[2])
-        month_delays[9] += num
-    elif read_info[0] == "11":
-        num = int(read_info[2])
-        month_delays[10] += num
-    elif read_info[0] == "12":
-        num = int(read_info[2])
-        month_delays[11] += num
+def find_month_delays(fname):
+    month_delays = 12 * [0]
+    months = []
+    delays = []
+    for row in loadFile(fname):
+        months.append(row[0])
+        delays.append(row[2])
+    delay_c = 0
+    for m in months:
+        if m == "1":
+            num = int(delays[delay_c])
+            month_delays[0] += num
+        elif m == "2":
+            num = int(delays[delay_c])
+            month_delays[1] += num
+        elif m == "3":
+            num = int(delays[delay_c])
+            month_delays[2] += num
+        elif m == "4":
+            num = int(delays[delay_c])
+            month_delays[3] += num
+        elif m == "5":
+            num = int(delays[delay_c])
+            month_delays[4] += num
+        elif m == "6":
+            num = int(delays[delay_c])
+            month_delays[5] += num
+        elif m == "7":
+            num = int(delays[delay_c])
+            month_delays[6] += num
+        elif m == "8":
+            num = int(delays[delay_c])
+            month_delays[7] += num
+        elif m == "9":
+            num = int(delays[delay_c])
+            month_delays[8] += num
+        elif m == "10":
+            num = int(delays[delay_c])
+            month_delays[9] += num
+        elif m == "11":
+            num = int(delays[delay_c])
+            month_delays[10] += num
+        elif m == "12":
+            num = int(delays[delay_c])
+            month_delays[11] += num
+        delay_c += 1
+    
+    return month_delays
+
+def most_delayed_month(month_list):
+    index = 0
+    most_delayed = 0
+    most_index = 0
+
+    for m in month_list:
+        if m > most_delayed:
+            most_delayed = m
+            most_index = index
+        index += 1
+
+    dict_buf = { most_index + 1 : most_delayed }
+    return dict_buf
+
 #7
-def find_day_delays(read_info, day_delays):
-    if read_info[1] == "1":
-        num = int(read_info[2])
-        day_delays[0] += num
-    elif read_info[1] == "2":
-        num = int(read_info[2])
-        day_delays[1] += num
-    elif read_info[1] == "3":
-        num = int(read_info[2])
-        day_delays[2] += num
-    elif read_info[1] == "4":
-        num = int(read_info[2])
-        day_delays[3] += num
-    elif read_info[1] == "5":
-        num = int(read_info[2])
-        day_delays[4] += num
-    elif read_info[1] == "6":
-        num = int(read_info[2])
-        day_delays[5] += num
-    elif read_info[1] == "7":
-        num = int(read_info[2])
-        day_delays[6] += num
+def find_day_delays(fname):
+    day_delays = 7 * [0]
+    days = []
+    delays = []
+    for row in loadFile(fname):
+        days.append(row[1])
+        delays.append(row[2])
+    delay_c = 0
+    for d in days:
+        if d == "1":
+            num = int(delays[delay_c])
+            day_delays[0] += num
+        elif d == "2":
+            num = int(delays[delay_c])
+            day_delays[1] += num
+        elif d == "3":
+            num = int(delays[delay_c])
+            day_delays[2] += num
+        elif d == "4":
+            num = int(delays[delay_c])
+            day_delays[3] += num
+        elif d == "5":
+            num = int(delays[delay_c])
+            day_delays[4] += num
+        elif d == "6":
+            num = int(delays[delay_c])
+            day_delays[5] += num
+        elif d == "7":
+            num = int(delays[delay_c])
+            day_delays[6] += num
+            delay_c += 1
+    return day_delays
+def most_delayed_day(day_list):
+    index = 0
+    most_delayed = 0
+    most_index = 0
+
+    for d in day_list:
+        if d > most_delayed:
+            most_delayed = d
+            most_index = index
+        index += 1
+
+    dict_buf = { most_index + 1 : most_delayed }
+    return dict_buf
+
 #8
-def find_most_delayed_airline(read_info, month_index, d_log):
-    if read_info[0] == month_index:
-        if read_info[8] in d_log:
-            d_log[read_info[8]] += 1
-        else:
-            dict_buf = {read_info[8] : 1}
-            d_log.update(dict_buf)
+def organize_monthly_delays(fname, month1, month2, month3):
+    d_log = {}
+    # read_info[i][0] = month
+    # read_info[i][1] = carrier name
+    months = []
+    carr_names = []
+    delays = []
+    delay_c = 0
+    for row in loadFile(fname):
+        months.append(row[0])
+        carr_names.append(row[8])
+        delays.append(row[2])
+    for m in months:
+        if m == month1 or m == month2 or m == month3:
+            if delays[delay_c] == "1":
+                if carr_names[delay_c] in d_log:
+                    d_log[carr_names[delay_c]] += 1
+                else:
+                    dict_buf = {carr_names[delay_c] : 1}
+                    d_log.update(dict_buf)
+        delay_c += 1
+    return d_log
+
+def find_most_delayed_airline(d_log):
+    most_delayed = ""
+    hi_delays = 0
     for i in d_log:
-        hi_delays = i.key
-        if (i.key > hi_delays):
-            hi_delays = i.key
-    return hi_delays
+        if (d_log[i] > hi_delays):
+            hi_delays = d_log[i]
+            most_delayed = i
+    return most_delayed
+
 #9
-def find_avg_plane_age(carrier_name):
+def find_avg_plane_age(fname, carrier_name):
+    delays = []
+    carr_names = []
+    plane_ages = []
+
     avg_age = 0
     plane_count = 0
-    if read_info[8] == carrier_name and read_info[2] == 1:
-        avg_age += int(read_info[16])
-        plane_count += 1
+    age_c = 0
 
-    return avg_age / plane_count
+    for row in loadFile(fname):
+        delays.append(row[2])
+        carr_names.append(row[8])
+        plane_ages.append(row[16])
+
+    for d in delays:
+        if carr_names[age_c] == carrier_name and d == "1":
+            avg_age += int(plane_ages[age_c])
+            plane_count += 1
+        age_c += 1
+    try:
+        answer = avg_age / plane_count
+    except ZeroDivisionError:
+        print("Error 103: Division by zero error")
+
+    return answer
 #10
-def snow_delay(read_info):
+def snow_delay(fname):
+    delays = []
+    snow_inches = []
+    snow_c = 0
+    # read_info[i][0] = delay
+    # read_info[i][1] = inches of snow
     count_of_planes = 0
-
-    if int(read_info[22]) >= 15 and read_info[2] == 1:
-        count_of_planes += 1
-    
+    for row in loadFile(fname):
+        delays.append(row[2])
+        snow_inches.append(row[22])
+    for d in delays:
+        if float(snow_inches[snow_c]) >= 15.0:
+            if d == "1":
+                count_of_planes += 1
+        snow_c += 1
     return count_of_planes
-    
 #2
-def collect_airports(read_info, alist):
-    if read_info[17] in alist:
-        alist[read_info[17]] += 1
-    else:
-        dict_buf = {read_info[17] : 1}
-        alist.update(dict_buf)
+def collect_airports(fname):
+    alist = {}
+    airports = []
+    delays = []
+    airport_c = 0
+
+    for row in loadFile(fname):
+        airports.append(row[17])
+        delays.append(row[2])
+    for a in airports:
+        if delays[airport_c] == "1":
+            if a in alist:
+                alist[a] += 1
+            else:
+                dict_buf = {a : 1}
+                alist.update(dict_buf)
+        airport_c += 1
+    return alist
 #11
 def top_5_airports(alist):
     new_dict = { }
-    most_delays = 0
-    most_delayed_airport = '0'
     for h in range(5):
+        most_delays = 0
+        most_delayed_airport = '0'
         for i in alist:
             if alist[i] > most_delays:
                 most_delays = alist[i]
-                most_delayed_airport = alist
+                most_delayed_airport = i
         dict_buf = {most_delayed_airport : most_delays}
         new_dict.update(dict_buf)
         del alist[most_delayed_airport]
     return new_dict
+
+def count_airlines(fname):
+    airlines = []
+    air_count = 0
+    air_list = []
+    for row in loadFile(fname):
+        airlines.append(row[8])
+    for a in airlines:
+        if a not in air_list:
+            air_count += 1
+            air_list.append(a)
+    return air_count
+
+def sort_airlines(fname):
+    sorted_list = []
+    airlines = []
+    for row in loadFile(fname):
+        airlines.append(row[8])
+    for i in range(5):
+        sorted_list.append(airlines[i])
+    sorted_list.sort()
+    return sorted_list 
+
+def count_airports(fname):
+    airports = []
+    air_count = 0
+    air_list = []
+    for row in loadFile(fname):
+        airports.append(row[17])
+    for a in airports:
+        if a not in air_list:
+            air_count += 1
+            air_list.append(a)
+    return air_count
+
+def sort_airports_bottom(fname):
+    sorted_list = []
+    airports = []
+    for row in loadFile(fname):
+        airports.append(row[17])
+    list_len = len(airports)
+    for i in range(list_len - 1, list_len - 6, -1):
+        sorted_list.append(airports[i])
+    sorted_list.sort()
+
+    return sorted_list
+
+def airline_age_dict(fname):
+    #read_info[i][0] = carrier name
+    #read_info[i][1] = plane age
+    airlines = []
+    plane_age = []
+    airline_dict = {}
+    age_c = 0
+
+    for row in loadFile(fname):
+        airlines.append(row[8])
+        plane_age.append(row[16])
+    for a in airlines:
+        dict_buf = {a : plane_age[age_c]}
+        airline_dict.update(dict_buf)
+        age_c += 1
+    return airline_dict
+
+def list_of_oldest_planes(airline_dict):
+    sorted_dict = { }
+    for h in range(5):
+        oldest_airline = ""
+        oldest = 0
+        for i in airline_dict:
+            if int(airline_dict[i]) > oldest:
+                oldest = int(airline_dict[i])
+                oldest_airline = i
+        dict_buf = {oldest_airline : oldest}
+        sorted_dict.update(dict_buf)
+        del airline_dict[oldest_airline]
+    return sorted_dict
+
+def get_oldest_airline(sorted_dict):
+    for key in sorted_dict:
+        return key
+
+def analyze(column):
+    isOfNumber(column)
+    a = count(column)
+    b = unique(column)
+    c = mean(column)
+    d = median(column)
+    e = mode(column)
+    f = variance(column, c)
+    g = std_dev(f)
+    h = per_20(column)
+    i = per_40(column)
+    j = per_50(column)
+    k = per_60(column)
+    l = per_80(column)
+    list_of_answers = [a, b, c, d, e, f, g, h, i, j, k, l]
+    
+    return list_of_answers
+    
 
 #Alonso #4
 def top_5_airport_passengers(dep_airports_list, avg_month_pass_airport): #fname is file name string
@@ -430,6 +645,82 @@ def top_5_airline_employees(airline_names, avg_monthly_pass_airline, flt_attenda
         top_air_names.extend(i for i in airline_tot if airline_tot[i]==value)
 
     return top_air_names #list of 5 elements
+
+def file_solver(fname):
+    a_names = []
+    a_mon_p = []
+    flight_a = []
+    g_serv = []
+    dep_airports = []
+    amp_airport = []
+
+    for row in loadFile(fname):
+        a_names.append(row[8])
+        a_mon_p.append(row[13])
+        flight_a.append(row[14])
+        g_serv.append(row[15])
+        dep_airports(row[17])
+        amp_airport(row[12])
+    
+    top_5_airport_passengers(dep_airports, amp_airport)
+    top_5_airline_employees(a_names, a_mon_p, flight_a, g_serv)
+
+def solve_reqs(fname):
+    month_delay_list = find_month_delays(fname)
+    day_delay_list = find_day_delays(fname)
+    delayed_airlines = organize_monthly_delays(fname, "1","7", "12")
+    most_delayed_airline = find_most_delayed_airline(delayed_airlines)
+    average_delay_age = find_avg_plane_age(fname, "American Airlines Inc.")
+    num_of_snow_planes = snow_delay(fname)
+    list_of_airports = collect_airports(fname)
+    top_5 = top_5_airports(list_of_airports)
+    num_of_airlines = count_airlines(fname)
+    t5_airlines = sort_airlines(fname)
+    num_of_airports = count_airports(fname)
+    b5_airports = sort_airports_bottom(fname)
+    airline_ages = airline_age_dict(fname)
+    sorted_airlines_by_age = list_of_oldest_planes(airline_ages)
+    old_airline = get_oldest_airline(sorted_airlines_by_age)
+    mdm = most_delayed_month(month_delay_list)
+    mdd = most_delayed_day(day_delay_list)
+    top_5_pass = top_5_airport_passengers(fname)
+    top_employees = top_5_airport_employees(fname)
+
+    print("Data Analysis:")
+    print("**************")
+
+    print("How many airlines are included in the data set? Print the first 5 in alphabetical order.")
+    print(num_of_airlines)
+    print(t5_airlines)
+
+    print("How many departing airports are included in the data set? Print the last 5 in alphabetical order.")
+    print(num_of_airports)
+    print(b5_airports)
+
+    print("What airline has the oldest plane? Print the 5 airlines that have the 5 oldest planes recorded.")
+    print(old_airline)
+    print(sorted_airlines_by_age)
+
+    # TODO: 4 and 5
+
+    print("What was the month of the year in 2019 with most delays overall? And how many delays were recorded in that month?")
+    print(mdm)
+
+    print("What was the day of the year in 2019 with most delays overall? And how many delays were recorded in that day?")
+    print(mdd)
+
+    print("What airline carrier experience the most delays in January, July and December?")
+    print(most_delayed_airline)
+
+    print("What was the average plane age of all planes with delays operated by American Airlines inc.")
+    print(average_delay_age)
+
+    print("How many planes were delayed for more than 15 minutes during days with \"heavy snow\" (Days when the inches of snow on ground were 15 or more)?")
+    print(num_of_snow_planes)
+
+    print("What are the 5 airports (Departing Airports) that had the most delays in 2019? Print the airports and the number of delays")
+    print(top_5)
+
 '''
 dep_airports = []
 avg_monthly_pass_airport = []
