@@ -684,7 +684,7 @@ def solve_reqs(fname):
     mdm = most_delayed_month(month_delay_list)
     mdd = most_delayed_day(day_delay_list)
     top_5_pass = top_5_airport_passengers(fname)
-    top_employees = top_5_airport_employees(fname)
+    top_employees = top_5_airline_employees(fname)
 
     print("Data Analysis:")
     print("**************")
