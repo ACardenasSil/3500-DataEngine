@@ -4,11 +4,13 @@
 #---------------------------
 
 # Load file
-from ExploringFile import readByPandas, distinctValue, dropColumn, searchColumn
-from openFile import readFile
+from ExploringFile import readByPandas, distinctValue, dropColumn, searchColumn, addColumn
+from openFile import loadFile
 
-filename = '/home/fac/walter/public_html/courses/cs3500/2022_fall/proj/data/2019_Airline_Delays_Dataset_train_Part1.csv'
-
+        
+print("Please type the name of the file to load:")
+filename = input("")
+#filename = '/home/fac/walter/public_html/courses/cs3500/2022_fall/proj/data/2019_Airline_Delays_Dataset_train_Part1.csv'
 def main_menu():
     print("Main Menu:")
     print("**********")
@@ -21,7 +23,9 @@ def main_menu():
     if ans1 == "1":
         print("Load data set: ")
         print("**********")
-        readFile(filename)
+        loadFile(filename)
+        print("File loaded succesfully!")
+        main_menu()
     elif ans1 == "2":
         expData()
     elif ans1 == "3":
@@ -44,17 +48,32 @@ def expData():
     ans2 = input()
     
     if ans2 == "21":
+        print("List all columns:")
+        print("**********************")
         readByPandas(filename)
         expData()
     elif ans2 == "22":
+        print("Drop Columns:")
+        print("******************")
         dropColumn(filename)
         expData()
     elif ans2 == "23":
+        print("Describes Columns:")
+        print("******************")
         exit()
     elif ans2 == "24":
+        print("Search Element in Column:")
+        print("************************")
         searchColumn(filename)
         expData()
     elif ans2 == "25":
         main_menu()
+    elif ans2 == "26":
+        addColumn(filename)
+        expData()
+    else:
+        print("Please choose again")
+        expData()
 
+#Calling function
 main_menu()
