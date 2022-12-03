@@ -6,8 +6,6 @@ import pandas as pd
 import time
 start_time = time.time()
 
-fname = input("Enter file name: ")
-method = input("Use pandas ? (yes/no) ")
 #read file without pandas
 def loadFile(fname):
     with open(fname, 'r') as file:
