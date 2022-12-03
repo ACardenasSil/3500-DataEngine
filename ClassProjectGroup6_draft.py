@@ -561,7 +561,10 @@ def get_oldest_airline(sorted_dict):
         return key
 
 def analyze(column):
-    isOfNumber(column)
+    
+    for number in column:
+        isOfNumber(number)
+
     a = count(column)
     b = unique(column)
     c = mean(column)
