@@ -13,7 +13,6 @@ def loadFile(fname):
         reader = csv.reader(file, delimiter = ',')
         cols = len(next(reader))
         for row in reader:
-            print(row)
             count+=1
     print ("Total columns:")
     print (cols)

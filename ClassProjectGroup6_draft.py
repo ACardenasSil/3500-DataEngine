@@ -120,7 +120,7 @@ def gen_objects(object):
         yield item
 
 def isOfNumber(numbers):
-    array = []
+    array = [];
     if isinstance(numbers, (float, int)):
         array = [numbers]
 
@@ -562,7 +562,7 @@ def get_oldest_airline(sorted_dict):
         return key
 
 def analyze(column):
-    
+     
     for number in column:
         isOfNumber(number)
 
