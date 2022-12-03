@@ -179,23 +179,33 @@ def loadData(fname):
     print (count)
 
 def sorting(fname, unique):
-     df = pd.read_csv(fname)
-     ans = input("Sort in DESC or ASC order: ")
-     rows = int(input("Amount of rows to show: "))
-     try:
-         if ans == 'DESC' and rows > 0:
-             df.sort_values(unique, ascending = False, inplace = True)
-             result = df[:rows]
-             print(result)
-         elif ans == 'ASC' and rows > 0:
-             df.sort_values(unique, inplace = True)
-             result = df[:rows]
-             print(result)
-         else:
-             print("Please enter ASC or DESC and a correct number of rows")
-             return
-     except TypeError:
-         print("Error 103: Incorrect column name")
+    df = pd.read_csv(fname)
+
+    try: 
+        column = df[unique]
+    except Exception:
+        print("Error 104: Column does not exist\n")
+        return
+
+    try:
+        rows = int(input("Amount of rows to show: "))
+    except Exception:
+        print("Error 105: Incorrect value for rows")
+        return
+
+    ans = input("Sort in DESC or ASC order: ")
+
+    if ans == 'DESC':
+        df.sort_values(unique, ascending = False, inplace = True)
+        result = df[:rows]
+        print(result)
+    elif ans == 'ASC':
+        df.sort_values(unique, inplace = True)
+        result = df[:rows]
+        print(result)
+    else:
+        print("Please enter ASC or DESC")
+        return
 """
 class nameSwitch:
     def colName(self, colNum):
@@ -932,7 +942,7 @@ def main_menu(filename):
             loadData(filename)
             end = time.time()
             runtime = end-start
-            print(f"File loaded succesfully! Time to load {runtime} sec")
+            print(f"File loaded succesfully! Time to load {runtime} sec\n")
         except Exception:
             print("File not found!")
         main_menu(filename)
@@ -940,14 +950,14 @@ def main_menu(filename):
         try:
             expData(filename)
         except Exception:
-            print("File has not been loaded")
+            print("File has not been loaded\n")
         main_menu(filename)
     elif ans1 == "3":
         #df = readByPandas(filename)
         try:
             solve_reqs(filename)
         except Exception:
-            print("File has not been loaded")
+            print("File has not been loaded\n")
         #code
         main_menu(filename)
     elif ans1 == "4":
@@ -970,16 +980,16 @@ def expData(filename):
         print("List all columns:")
         print("**********************")
         readByPandas(filename)
-        yn = input("Sort by a column name? yes/no")
+        yn = input("Sort by a column name? yes/no: ")
         if yn == 'yes':
             unique = input("Enter column name: ")
             sorting(filename, unique)
-        expData()
+        expData(filename)
     elif ans2 == "22":
         print("Drop Columns:")
         print("******************")
         dropColumn(filename)
-        expData()
+        expData(filename)
     elif ans2 == "23":
         answers = [] * 12
         col = describe_data(filename)
@@ -1001,20 +1011,20 @@ def expData(filename):
             print(f"80th percentile: {answers[11]}")
         except TypeError:
             print("Error 102: Incorrect datatype")
-        expData()
+        expData(filename)
     elif ans2 == "24":
         print("Search Element in Column:")
         print("************************")
         searchColumn(filename)
-        expData()
+        expData(filename)
     elif ans2 == "25":
         main_menu(filename)
     elif ans2 == "26":
         addColumn(filename)
-        expData()
+        expData(filename)
     else:
         print("Please choose again")
-        expData()
+        expData(filename)
 
 #Calling function
 main_menu("")
