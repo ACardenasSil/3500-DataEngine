@@ -59,10 +59,27 @@ def expData():
         print("******************")
         dropColumn(filename)
         expData()
-    elif ans2 == "23":
-        print("Describes Columns:")
-        print("******************")
-        exit()
+     elif ans2 == "23":
+        col = describe_data(filename)
+        print("Column stats: ")
+        print("*************")
+        try:
+            answers = analyze(col)
+        except TypeError:
+            print("Error 102: Incorrect datatype")
+        print(f"Count: {answers[0]}")
+        print(f"Unique: {answers[1]}")
+        print(f"Mean: {answers[2]}")
+        print(f"Median: {answers[3]}")
+        print(f"Mode: {answers[4]}")
+        print(f"Variance: {answers[5]}")
+        print(f"Standard deviation: {answers[6]}")
+        print(f"20th percentile: {answers[7]}")
+        print(f"40th percentile: {answers[8]}")
+        print(f"50th percentile: {answers[9]}")
+        print(f"60th percentile: {answers[10]}")
+        print(f"80th percentile: {answers[11]}")
+        expData()
     elif ans2 == "24":
         print("Search Element in Column:")
         print("************************")
