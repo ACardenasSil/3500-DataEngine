@@ -120,6 +120,7 @@ def gen_objects(object):
         yield item
 
 def isOfNumber(numbers):
+    array = []
     if isinstance(numbers, (float, int)):
         array = [numbers]
 
