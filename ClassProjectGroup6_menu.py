@@ -983,7 +983,10 @@ def expData(filename):
         yn = input("Sort by a column name? yes/no: ")
         if yn == 'yes':
             unique = input("Enter column name: ")
-            sorting(filename, unique)
+            if unique not in dropList:
+                sorting(filename, unique)
+            else:
+                print("This column was dropped")
         expData(filename)
     elif ans2 == "22":
         print("Drop Columns:")
